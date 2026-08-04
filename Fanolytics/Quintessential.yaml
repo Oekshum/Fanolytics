@@ -1,0 +1,8 @@
+Name: Fanolytics
+Version: 0.0.1
+DLL: "Fanolytics.dll"
+Dependencies:
+- Name: Quintessential
+  Version: 0.5.6
+- Name: Brimstone
+  Version: 2.0.3
