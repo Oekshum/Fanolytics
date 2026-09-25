@@ -145,6 +145,73 @@ namespace Fanolytics
                         {
                             Brimstone.API.AddAtom(sim, part, reflectionOutput, pss[part].field_2744[0]);
                         }
+                    } else if (type == class_191.field_1775)  //is triplex bonder
+                    {
+                        bool fullBonder = true;
+                        List<AtomType> foundAtoms = new();
+                        List<HexIndex> checkInputs = new();
+
+                        foreach (class_222 bonder in type.field_1538)
+                        {
+                            HexIndex leftInput = part.method_1184(bonder.field_1920);
+                            HexIndex rightInput = part.method_1184(bonder.field_1921);
+                            if (!checkInputs.Contains(leftInput))
+                            {
+                                checkInputs.Add(leftInput);
+                            }
+                            if (!checkInputs.Contains(rightInput))
+                            {
+                                checkInputs.Add(rightInput);
+                            }
+                        }
+
+                        foreach (HexIndex input in checkInputs)
+                        {
+                            
+                            if (!sim.FindAtom(input).method_99(out AtomReference leftAtom))
+                            {
+                                fullBonder = false;
+                                break;
+                            }
+                            if (!ReflectionChecker.isFano(leftAtom.field_2280))
+                            {
+                                fullBonder = false;
+                                break;
+                            }
+                            foundAtoms.Add(leftAtom.field_2280);
+                        }
+
+                        if (!fullBonder)
+                        {
+                            continue;
+                        }
+                        Logger.Log("all atoms were found");
+
+                        Logger.Log(foundAtoms[0]);
+                        Logger.Log(foundAtoms[1]);
+                        Logger.Log(foundAtoms[2]);
+
+                        if (ReflectionChecker.GetReflectedAtom(foundAtoms[0], foundAtoms[1]) != foundAtoms[2])
+                        {
+                            Logger.Log(ReflectionChecker.GetReflectedAtom(foundAtoms[0], foundAtoms[1]));
+                            continue;
+                        }
+                        Logger.Log("all atoms were fano");
+
+                        foreach (class_222 bonder in type.field_1538)
+                        {
+                            HexIndex leftInput = part.method_1184(bonder.field_1920);
+                            HexIndex rightInput = part.method_1184(bonder.field_1921);
+                            Logger.Log("finding atoms to bond");
+                            if (sim.FindAtom(leftInput).method_99(out AtomReference leftAtom) && sim.FindAtom(rightInput).method_99(out AtomReference rightAtom))
+                            {
+                                Logger.Log("the names bond, triplex bond");
+                                Brimstone.API.JoinMolecules(sim, leftAtom.field_2277, rightAtom.field_2277, out Molecule joined);
+                                Brimstone.API.AddBond(sim, joined, leftInput, rightInput, enum_126.Prisma0);
+                                Brimstone.API.AddBond(sim, joined, leftInput, rightInput, enum_126.Prisma1);
+                                Brimstone.API.AddBond(sim, joined, leftInput, rightInput, enum_126.Prisma2);
+                            }
+                        }
                     }
                 }
             });

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Reference Include="Brimstone">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Opus Magnum\UnpackedMods\Brimstone_2.0.3\Brimstone.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Opus Magnum\UnpackedMods\Brimstone_2.3.0\Brimstone.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_ModdedLightning">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Opus Magnum\MMHOOK_ModdedLightning.dll</HintPath>
